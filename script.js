@@ -6,20 +6,45 @@
 //submit button function
 
 const form = document.querySelector("form");
-const email = documnt.getElementbyId("mail");
+const email = document.getElementbyId("mail");
 const emailError = document.querySelector('#mail + span.error');
 
-email.addEventListener("input", (event) => {
-    if(email.validity.valid){
-        emailError.textContent = "";
-        emailError.className = "error";
+email.addEventListener("input", validateFormElement(email, emailError));
+
+//general function to validate form element on input
+function validateFormElement(element, elementError) {
+    if(element.validity.valid){
+        elementError.textContent = "";
+        elementError.className = "error";
     } else {
-        showError(email, emailError);
+        showError(element, elementError);
     }
-});
+} 
 
 function showError(element, elementError) {
     if(element.validity.valueMissing) {
-        elementError.textContent = ""
+        switch(element.id) {
+            case email:
+                elementError.textContent = "You need to enter an email address.";
+                break;
+            default:
+                elementError.textContent = "Error!";
+        }
+    } else if(element.validity.typeMismatch) {
+        switch(element.id) {
+            case email:
+                elementError.textContent = "Entered value needs to be an email address.";
+                break;
+            default:
+                elementError.textContent = "Error!";
+        }
+    } else if(element.validity.tooShort) {
+        switch(element.id) {
+            case email:
+                elementError.textContent = `Email should be at least ${element.minLength} characters; you entered ${element.value.length}.`;
+                break;
+            default:
+                elementError.textContent = "Error!";
+        }
     }
 }
