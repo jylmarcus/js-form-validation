@@ -6,10 +6,13 @@
 //submit button function
 
 const form = document.querySelector("form");
-const email = document.getElementbyId("mail");
-const emailError = document.querySelector('#mail + span.error');
+const formElements = document.querySelectorAll(".form-control");
 
-email.addEventListener("input", validateFormElement(email, emailError));
+//Assign corresponding error spans to each input element and add validation function on input event
+formElements.forEach(function(element){
+    elementError = document.querySelector(`#${element.id} + span.error`);
+    element.addEventListener("input", validateFormElement(element, elementError));
+})
 
 //general function to validate form element on input
 function validateFormElement(element, elementError) {
@@ -21,10 +24,11 @@ function validateFormElement(element, elementError) {
     }
 } 
 
+//function to display error message depending on type of error and form input
 function showError(element, elementError) {
     if(element.validity.valueMissing) {
         switch(element.id) {
-            case email:
+            case 'email':
                 elementError.textContent = "You need to enter an email address.";
                 break;
             default:
@@ -32,7 +36,7 @@ function showError(element, elementError) {
         }
     } else if(element.validity.typeMismatch) {
         switch(element.id) {
-            case email:
+            case 'email':
                 elementError.textContent = "Entered value needs to be an email address.";
                 break;
             default:
@@ -40,7 +44,7 @@ function showError(element, elementError) {
         }
     } else if(element.validity.tooShort) {
         switch(element.id) {
-            case email:
+            case 'email':
                 elementError.textContent = `Email should be at least ${element.minLength} characters; you entered ${element.value.length}.`;
                 break;
             default:
