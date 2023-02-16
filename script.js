@@ -28,15 +28,21 @@ function validateFormElement(element, elementError) {
 function showError(element, elementError) {
     if(element.validity.valueMissing) {
         switch(element.id) {
-            case 'email':
+            case 'mail':
                 elementError.textContent = "You need to enter an email address.";
+                break;
+            case 'zip':
+                elementError.textContent = "You need to enter a zip code.";
+                break;
+            case 'password':
+                elementError.textContent = "You need to enter a password.";
                 break;
             default:
                 elementError.textContent = "Error!";
         }
     } else if(element.validity.typeMismatch) {
         switch(element.id) {
-            case 'email':
+            case 'mail':
                 elementError.textContent = "Entered value needs to be an email address.";
                 break;
             default:
@@ -44,11 +50,32 @@ function showError(element, elementError) {
         }
     } else if(element.validity.tooShort) {
         switch(element.id) {
-            case 'email':
+            case 'mail':
                 elementError.textContent = `Email should be at least ${element.minLength} characters; you entered ${element.value.length}.`;
+                break;
+            case 'zip':
+                elementError.textContent = `Zip code should be at least ${element.minLength} characters; you entered ${element.value.length}.`;
+                break;
+            case 'password':
+                elementError.textContent = `Password should contain at least ${element.minLength} characters; you entered ${element.value.length}.`;
+                break;
+            default:
+                elementError.textContent = "Error!";
+        }
+    } else if(element.validity.patternMismatch) {
+        switch(element.id) {
+            case 'zip':
+                elementError.textContent = `Zip code should be 6 digits.`;
+                break;
+            case 'password':
+                elementError.textContent = `Password should contain at least 1 number, 1 uppercase and 1 lowercase letter.`;
                 break;
             default:
                 elementError.textContent = "Error!";
         }
     }
+}
+
+function checkPassword(){
+    
 }
