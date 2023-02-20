@@ -83,7 +83,7 @@ function showError(element, elementError) {
 function checkPassword(){
     const password = document.querySelector('input[name=password]');
     const confirm = document.querySelector('input[name=confirm]');
-    const confirmError = document.querySelector(`${confirm.id} + span.error`);
+    const confirmError = document.querySelector(`#${confirm.id} + span.error`);
     if(confirm.value === password.value) {
         confirmError.textContent = "";
         confirmError.className = "error";
