@@ -73,9 +73,21 @@ function showError(element, elementError) {
             default:
                 elementError.textContent = "Error!";
         }
+    } else if(element.id === 'confirm') {
+        elementError.textContent = `Passwords do not match.`;
     }
+
+    elementError.className = "error active";
 }
 
 function checkPassword(){
-    
+    const password = document.querySelector('input[name=password]');
+    const confirm = document.querySelector('input[name=confirm]');
+    const confirmError = document.querySelector(`${confirm.id} + span.error`);
+    if(confirm.value === password.value) {
+        confirmError.textContent = "";
+        confirmError.className = "error";
+    } else {
+        showError(confirm, confirmError);
+    }
 }
