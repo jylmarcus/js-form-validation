@@ -9,18 +9,18 @@ const form = document.querySelector("form");
 const formElements = document.querySelectorAll(".form-control");
 
 //Assign corresponding error spans to each input element and add validation function on input event
-formElements.forEach(function(element){
-    elementError = document.querySelector(`#${element.id} + span.error`);
-    element.addEventListener("input", validateFormElement(element, elementError));
+formElements.forEach(function(element){ 
+    element.addEventListener('input', validateFormElement);
 })
 
 //general function to validate form element on input
-function validateFormElement(element, elementError) {
-    if(element.validity.valid){
+function validateFormElement() {
+    elementError = document.querySelector(`#${this.id} + span.error`);
+    if(this.validity.valid){
         elementError.textContent = "";
         elementError.className = "error";
     } else {
-        showError(element, elementError);
+        showError(this, elementError);
     }
 } 
 
@@ -80,14 +80,17 @@ function showError(element, elementError) {
     elementError.className = "error active";
 }
 
+const password = document.querySelector('input[name=password]');
+const confirmPassword = document.querySelector('input[name=confirm]');
+const confirmError = document.querySelector(`#${confirmPassword.id} + span.error`);
+
+confirmPassword.addEventListener('input', checkPassword);
+
 function checkPassword(){
-    const password = document.querySelector('input[name=password]');
-    const confirm = document.querySelector('input[name=confirm]');
-    const confirmError = document.querySelector(`#${confirm.id} + span.error`);
-    if(confirm.value === password.value) {
+    if(confirmPassword.value === password.value) {
         confirmError.textContent = "";
         confirmError.className = "error";
     } else {
-        showError(confirm, confirmError);
+        showError(confirmPassword, confirmError);
     }
 }
